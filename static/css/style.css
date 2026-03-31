@@ -1,0 +1,297 @@
+/* ============================================================
+   Global Reset & Variables
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --red:        #e63946;
+  --red-light:  #ff6b6b;
+  --red-pale:   #ffeaea;
+  --green:      #2a9d8f;
+  --green-pale: #e8f7f5;
+  --grey-bg:    #f4f6f9;
+  --white:      #ffffff;
+  --text:       #2d3436;
+  --text-light: #636e72;
+  --border:     #dfe6e9;
+  --radius:     12px;
+  --shadow:     0 4px 20px rgba(0,0,0,0.08);
+  --transition: 0.25s ease;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--grey-bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+header {
+  background: linear-gradient(135deg, #c0392b 0%, #e63946 60%, #ff6b6b 100%);
+  color: #fff;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(230,57,70,0.4);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.heart-icon { font-size: 2.5rem; }
+
+header h1 { font-size: 1.8rem; font-weight: 700; }
+header p  { font-size: 0.9rem; opacity: 0.9; margin-top: 0.2rem; }
+
+/* ============================================================
+   Main
+   ============================================================ */
+main {
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+.form-card h2  { font-size: 1.3rem; margin-bottom: 0.3rem; }
+.subtitle      { color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+/* ============================================================
+   Form Grid
+   ============================================================ */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.unit {
+  font-weight: 400;
+  color: var(--text-light);
+}
+
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23636e72' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.2rem;
+}
+
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(230,57,70,0.15);
+}
+
+input.invalid, select.invalid {
+  border-color: #e17055;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.form-actions {
+  margin-top: 1.8rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(230,57,70,0.35);
+}
+
+.btn-primary:hover { background: #c0392b; box-shadow: 0 6px 16px rgba(230,57,70,0.45); }
+
+.btn-secondary {
+  background: var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover { background: #b2bec3; }
+
+/* Spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   Result Card
+   ============================================================ */
+.result-card {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-top: 5px solid var(--green);
+  animation: fadeIn 0.4s ease;
+}
+
+.result-card.danger {
+  border-top-color: var(--red);
+}
+
+.result-icon { font-size: 4rem; margin-bottom: 0.8rem; }
+
+.result-card h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.result-card.danger h2 { color: var(--red); }
+.result-card.safe    h2 { color: var(--green); }
+
+.confidence-text {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 1.2rem;
+}
+
+.accuracy-badges {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.badge {
+  background: var(--grey-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.disclaimer {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  background: #fff8e1;
+  border-left: 3px solid #f9c74f;
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Error Card
+   ============================================================ */
+.error-card {
+  background: #fff5f5;
+  border: 1.5px solid #ffb3b3;
+  color: #c0392b;
+  font-size: 0.95rem;
+  padding: 1rem 1.5rem;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+footer {
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.82rem;
+  color: var(--text-light);
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+.hidden { display: none !important; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.4rem; }
+  .card     { padding: 1.2rem; }
+  .form-grid{ grid-template-columns: 1fr; }
+}
