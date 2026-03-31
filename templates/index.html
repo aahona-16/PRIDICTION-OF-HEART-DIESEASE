@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heart Disease Prediction</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="header-inner">
+      <span class="heart-icon">❤️</span>
+      <div>
+        <h1>Heart Disease Prediction</h1>
+        <p>AI-powered early detection using Logistic Regression</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <section class="card form-card">
+      <h2>Enter Patient Details</h2>
+      <p class="subtitle">Fill in the clinical measurements below and click <strong>Predict</strong>.</p>
+
+      <form id="predictionForm" novalidate>
+
+        <!-- Row 1 -->
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="age">Age <span class="unit">(years)</span></label>
+            <input type="number" id="age" name="age" min="1" max="120" placeholder="e.g. 54" required />
+          </div>
+
+          <div class="field">
+            <label for="sex">Sex</label>
+            <select id="sex" name="sex" required>
+              <option value="" disabled selected>Select</option>
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="cp">Chest Pain Type</label>
+            <select id="cp" name="cp" required>
+              <option value="" disabled selected>Select</option>
+              <option value="0">Typical Angina (0)</option>
+              <option value="1">Atypical Angina (1)</option>
+              <option value="2">Non-anginal Pain (2)</option>
+              <option value="3">Asymptomatic (3)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="trestbps">Resting Blood Pressure <span class="unit">(mmHg)</span></label>
+            <input type="number" id="trestbps" name="trestbps" min="80" max="250" placeholder="e.g. 130" required />
+          </div>
+
+          <div class="field">
+            <label for="chol">Serum Cholesterol <span class="unit">(mg/dl)</span></label>
+            <input type="number" id="chol" name="chol" min="100" max="700" placeholder="e.g. 240" required />
+          </div>
+
+          <div class="field">
+            <label for="fbs">Fasting Blood Sugar > 120 mg/dl</label>
+            <select id="fbs" name="fbs" required>
+              <option value="" disabled selected>Select</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="restecg">Resting ECG Results</label>
+            <select id="restecg" name="restecg" required>
+              <option value="" disabled selected>Select</option>
+              <option value="0">Normal (0)</option>
+              <option value="1">ST-T Wave Abnormality (1)</option>
+              <option value="2">Left Ventricular Hypertrophy (2)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="thalach">Max Heart Rate Achieved <span class="unit">(bpm)</span></label>
+            <input type="number" id="thalach" name="thalach" min="60" max="220" placeholder="e.g. 150" required />
+          </div>
+
+          <div class="field">
+            <label for="exang">Exercise Induced Angina</label>
+            <select id="exang" name="exang" required>
+              <option value="" disabled selected>Select</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="oldpeak">ST Depression <span class="unit">(oldpeak)</span></label>
+            <input type="number" id="oldpeak" name="oldpeak" step="0.1" min="0" max="10" placeholder="e.g. 1.5" required />
+          </div>
+
+          <div class="field">
+            <label for="slope">Slope of Peak Exercise ST</label>
+            <select id="slope" name="slope" required>
+              <option value="" disabled selected>Select</option>
+              <option value="0">Upsloping (0)</option>
+              <option value="1">Flat (1)</option>
+              <option value="2">Downsloping (2)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="ca">Major Vessels Coloured by Fluoroscopy</label>
+            <select id="ca" name="ca" required>
+              <option value="" disabled selected>Select</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="thal">Thalassemia</label>
+            <select id="thal" name="thal" required>
+              <option value="" disabled selected>Select</option>
+              <option value="0">Normal (0)</option>
+              <option value="1">Fixed Defect (1)</option>
+              <option value="2">Reversible Defect (2)</option>
+              <option value="3">Unknown (3)</option>
+            </select>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <div class="form-actions">
+          <button type="submit" id="predictBtn" class="btn btn-primary">
+            <span id="btnText">🔍 Predict</span>
+            <span id="btnSpinner" class="spinner hidden"></span>
+          </button>
+          <button type="reset" class="btn btn-secondary" id="resetBtn">↺ Reset</button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- ===== RESULT ===== -->
+    <section id="resultSection" class="card result-card hidden" aria-live="polite">
+      <div id="resultIcon" class="result-icon"></div>
+      <h2 id="resultLabel"></h2>
+      <p id="resultConfidence" class="confidence-text"></p>
+      <div class="accuracy-badges">
+        <span class="badge" id="trainBadge"></span>
+        <span class="badge" id="testBadge"></span>
+      </div>
+      <p class="disclaimer">⚠️ This tool is for educational purposes only and does <strong>not</strong> replace professional medical advice.</p>
+    </section>
+
+    <!-- ===== ERROR ===== -->
+    <section id="errorSection" class="card error-card hidden" aria-live="polite">
+      <p id="errorMsg"></p>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>Built with ❤️ &amp; Python · Logistic Regression · Scikit-learn · Flask</p>
+  </footer>
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>
